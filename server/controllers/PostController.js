@@ -1,21 +1,20 @@
-import PostModel from "../models/postModel.js";
 import UserModel from "../models/userModel.js";
+import PostModel from "../models/postModel.js";
+import OrderModel from "../models/orderModel.js";
 import mongoose from "mongoose";
 
-// creating a post
-
 export const createPost = async (req, res) => {
-  const newPost = new PostModel(req.body);
+  const { orderId, userId, desc, image } = req.body;
 
   try {
+    const newPost = new PostModel({ userId, desc, image, orderId });
     await newPost.save();
+    await OrderModel.findByIdAndUpdate(orderId, { posted: true });
     res.status(200).json(newPost);
   } catch (error) {
     res.status(500).json(error);
   }
 };
-
-// get a post
 
 export const getPost = async (req, res) => {
   const id = req.params.id;
@@ -82,12 +81,12 @@ export const likePost = async (req, res) => {
 
 // Get timeline posts
 export const getTimelinePosts = async (req, res) => {
-  const userId = req.params.id
+  const userId = req.params.id;
   try {
     const currentUserPosts = await PostModel.find({ userId: userId });
 
     const followingPosts = await UserModel.aggregate([
-      { 
+      {
         $match: {
           _id: new mongoose.Types.ObjectId(userId),
         },

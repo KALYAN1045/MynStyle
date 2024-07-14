@@ -76,14 +76,6 @@ const PostShare = () => {
           required
           ref={desc}
         />
-        <select>
-          <option value="">Select previous order</option>
-          {/* Add options dynamically here */}
-          {/* Example: */}
-          <option value="order1">Order 1</option>
-          <option value="order2">Order 2</option>
-          {/* Replace with actual order data dynamically fetched */}
-        </select>
         <div className="postOptions">
           <div
             className="option"
@@ -94,6 +86,18 @@ const PostShare = () => {
             Photo
           </div>
 
+          <div className="option" style={{ color: "var(--video)" }}>
+            <UilPlayCircle />
+            Video
+          </div>
+          <div className="option" style={{ color: "var(--location)" }}>
+            <UilLocationPoint />
+            Location
+          </div>
+          <div className="option" style={{ color: "var(--shedule)" }}>
+            <UilSchedule />
+            Shedule
+          </div>
           <button
             className="button ps-button"
             onClick={handleUpload}
