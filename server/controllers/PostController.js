@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 
 export const createPost = async (req, res) => {
   const { orderId, userId, desc, image } = req.body;
-
+  console.log("hello");
   try {
     const newPost = new PostModel({ userId, desc, image, orderId });
     await newPost.save();

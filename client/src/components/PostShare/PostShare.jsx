@@ -1,20 +1,34 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./PostShare.css";
 import { UilScenery } from "@iconscout/react-unicons";
-import { UilPlayCircle } from "@iconscout/react-unicons";
-import { UilLocationPoint } from "@iconscout/react-unicons";
-import { UilSchedule } from "@iconscout/react-unicons";
 import { UilTimes } from "@iconscout/react-unicons";
 import { useDispatch, useSelector } from "react-redux";
 import { uploadImage, uploadPost } from "../../actions/UploadAction";
+import { getUnpostedOrders } from "../../api/OrderRequests";
 
 const PostShare = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authReducer.authData);
   const loading = useSelector((state) => state.postReducer.uploading);
   const [image, setImage] = useState(null);
+  const [orders, setOrders] = useState([]);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
   const desc = useRef();
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  // Fetch unposted orders on component mount
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  const fetchOrders = async () => {
+    try {
+      const response = await getUnpostedOrders(user._id);
+      setOrders(response.data);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
 
   // handle Image Change
   const onImageChange = (event) => {
@@ -30,10 +44,17 @@ const PostShare = () => {
   const handleUpload = async (e) => {
     e.preventDefault();
 
-    //post data
+    // Check if an order is selected
+    if (!selectedOrderId) {
+      console.error("No order selected.");
+      return;
+    }
+
+    // Post data
     const newPost = {
       userId: user._id,
       desc: desc.current.value,
+      orderId: selectedOrderId, // Include selected order ID
     };
 
     // if there is an image with post
@@ -43,13 +64,14 @@ const PostShare = () => {
       data.append("name", fileName);
       data.append("file", image);
       newPost.image = fileName;
-      console.log(newPost);
+
       try {
         dispatch(uploadImage(data));
       } catch (err) {
         console.log(err);
       }
     }
+    console.log(newPost);
     dispatch(uploadPost(newPost));
     resetShare();
   };
@@ -58,7 +80,16 @@ const PostShare = () => {
   const resetShare = () => {
     setImage(null);
     desc.current.value = "";
+    setSelectedOrderId(null); // Reset selected order ID
   };
+
+  // Handle change in dropdown selection
+  const handleOrderChange = (event) => {
+    const orderId = event.target.value;
+    console.log(orderId);
+    setSelectedOrderId(orderId);
+  };
+
   return (
     <div className="PostShare">
       <img
@@ -76,6 +107,13 @@ const PostShare = () => {
           required
           ref={desc}
         />
+        <select className="dropdown" onChange={handleOrderChange}>
+          {orders.map((order) => (
+            <option key={order._id} value={order._id} className="Orderoption">
+              {order.items.join(", ")}
+            </option>
+          ))}
+        </select>
         <div className="postOptions">
           <div
             className="option"
@@ -86,18 +124,6 @@ const PostShare = () => {
             Photo
           </div>
 
-          <div className="option" style={{ color: "var(--video)" }}>
-            <UilPlayCircle />
-            Video
-          </div>
-          <div className="option" style={{ color: "var(--location)" }}>
-            <UilLocationPoint />
-            Location
-          </div>
-          <div className="option" style={{ color: "var(--shedule)" }}>
-            <UilSchedule />
-            Shedule
-          </div>
           <button
             className="button ps-button"
             onClick={handleUpload}

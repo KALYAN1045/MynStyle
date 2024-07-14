@@ -4,6 +4,7 @@
   background-color: var(--cardColor);
   padding: 1rem;
   border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
 }
 
 .PostShare > img {
@@ -11,6 +12,7 @@
   width: 3rem;
   height: 3rem;
 }
+
 .PostShare > div {
   display: flex;
   flex-direction: column;
@@ -19,7 +21,7 @@
 }
 
 .PostShare > div > input {
-  background-color: var(--inputColor);
+  background-color: #ffcdf2;
   border-radius: 10px;
   padding: 10px;
   font-size: 17px;
@@ -27,25 +29,39 @@
   outline: none;
 }
 
-select {
+.dropdown {
   background-color: var(--inputColor);
   border-radius: 10px;
-  font-size: 17px;
   padding: 10px;
+  font-size: 17px;
   border: none;
   outline: none;
-  padding-right: 30px;
-  appearance: none;
+  position: relative; /* Ensure position relative for pseudo-element */
 }
 
-/* Custom arrow styling */
-select::after {
-  content: "\25BC"; /* Unicode for downward triangle */
+.dropdown:before {
+  content: ""; /* Remove default arrow */
   position: absolute;
   top: 50%;
-  right: 10px; /* Adjust this value to position the arrow */
+  right: 10px;
   transform: translateY(-50%);
-  pointer-events: none; /* Ensure the arrow doesn't interfere with select click */
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+
+.dropdown .Orderoption {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #eaf4ff;
+  color: black;
+}
+
+.dropdown .Orderoption:hover {
+  background-color: #ffe0a7b5;
 }
 
 .postOptions {
@@ -67,6 +83,7 @@ select::after {
 .option:hover {
   cursor: pointer;
 }
+
 .ps-button {
   padding: 5px;
   padding-left: 20px;
@@ -76,7 +93,6 @@ select::after {
 
 .previewImage {
   position: relative;
-  /* display: flex; */
 }
 
 .previewImage > svg {
