@@ -12,7 +12,7 @@ const PostShare = () => {
   const loading = useSelector((state) => state.postReducer.uploading);
   const [image, setImage] = useState(null);
   const [orders, setOrders] = useState([]);
-  const [selectedOrderId, setSelectedOrderId] = useState(null);
+  const [selectedOrderId, setSelectedOrderId] = useState("");
   const desc = useRef();
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -24,7 +24,13 @@ const PostShare = () => {
   const fetchOrders = async () => {
     try {
       const response = await getUnpostedOrders(user._id);
-      setOrders(response.data);
+      const fetchedOrders = response.data;
+      setOrders(fetchedOrders);
+
+      // Set the default selected order ID if there are orders
+      if (fetchedOrders.length > 0) {
+        setSelectedOrderId(fetchedOrders[0]._id);
+      }
     } catch (error) {
       console.error("Error fetching orders:", error);
     }
@@ -80,7 +86,11 @@ const PostShare = () => {
   const resetShare = () => {
     setImage(null);
     desc.current.value = "";
-    setSelectedOrderId(null); // Reset selected order ID
+    if (orders.length > 0) {
+      setSelectedOrderId(orders[0]._id);
+    } else {
+      setSelectedOrderId("");
+    }
   };
 
   // Handle change in dropdown selection
@@ -107,7 +117,11 @@ const PostShare = () => {
           required
           ref={desc}
         />
-        <select className="dropdown" onChange={handleOrderChange}>
+        <select
+          className="dropdown"
+          value={selectedOrderId}
+          onChange={handleOrderChange}
+        >
           {orders.map((order) => (
             <option key={order._id} value={order._id} className="Orderoption">
               {order.items.join(", ")}
