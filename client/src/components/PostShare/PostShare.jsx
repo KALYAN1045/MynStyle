@@ -21,16 +21,20 @@ const PostShare = () => {
     fetchOrders();
   }, []);
 
+  useEffect(() => {
+    // Reset selected order ID if the orders list changes
+    if (orders.length > 0) {
+      setSelectedOrderId(orders[0]._id);
+    } else {
+      setSelectedOrderId("");
+    }
+  }, [orders]);
+
   const fetchOrders = async () => {
     try {
       const response = await getUnpostedOrders(user._id);
       const fetchedOrders = response.data;
       setOrders(fetchedOrders);
-
-      // Set the default selected order ID if there are orders
-      if (fetchedOrders.length > 0) {
-        setSelectedOrderId(fetchedOrders[0]._id);
-      }
     } catch (error) {
       console.error("Error fetching orders:", error);
     }
@@ -79,6 +83,13 @@ const PostShare = () => {
     }
     console.log(newPost);
     dispatch(uploadPost(newPost));
+
+    // Remove the selected order from the list of unposted orders
+    const updatedOrders = orders.filter(
+      (order) => order._id !== selectedOrderId
+    );
+    setOrders(updatedOrders);
+
     resetShare();
   };
 
@@ -99,6 +110,10 @@ const PostShare = () => {
     console.log(orderId);
     setSelectedOrderId(orderId);
   };
+
+  if (orders.length === 0) {
+    return null; // or return an alternative message, e.g., <p>No unposted orders available.</p>
+  }
 
   return (
     <div className="PostShare">
