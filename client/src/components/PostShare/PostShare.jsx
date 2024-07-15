@@ -55,8 +55,8 @@ const PostShare = ({ onPostShare }) => {
       return;
     }
 
-    if (!descText && !image) {
-      alert("Please enter a description or select an image to post.");
+    if (!image) {
+      alert("Please attach an snapshot of your order to share 🛍️");
       return;
     }
 
