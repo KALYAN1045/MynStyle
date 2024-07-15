@@ -13,6 +13,7 @@ const PostShare = () => {
   const [image, setImage] = useState(null);
   const [orders, setOrders] = useState([]);
   const [selectedOrderId, setSelectedOrderId] = useState("");
+  const [descText, setDescText] = useState("");
   const desc = useRef();
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -60,6 +61,12 @@ const PostShare = () => {
       return;
     }
 
+    // Check if there is text in the input or an image selected
+    if (!descText && !image) {
+      alert("Please enter a description or select an image to post.");
+      return;
+    }
+
     // Post data
     const newPost = {
       userId: user._id,
@@ -96,6 +103,7 @@ const PostShare = () => {
   // Reset Post Share
   const resetShare = () => {
     setImage(null);
+    setDescText("");
     desc.current.value = "";
     if (orders.length > 0) {
       setSelectedOrderId(orders[0]._id);
@@ -109,6 +117,11 @@ const PostShare = () => {
     const orderId = event.target.value;
     console.log(orderId);
     setSelectedOrderId(orderId);
+  };
+
+  // Handle description text change
+  const handleDescChange = (event) => {
+    setDescText(event.target.value);
   };
 
   if (orders.length === 0) {
@@ -131,6 +144,7 @@ const PostShare = () => {
           placeholder="What's happening?"
           required
           ref={desc}
+          onChange={handleDescChange}
         />
         <select
           className="dropdown"
@@ -158,7 +172,7 @@ const PostShare = () => {
             onClick={handleUpload}
             disabled={loading}
           >
-            {loading ? "uploading" : "Share"}
+            {loading ? "Uploading" : "Share"}
           </button>
 
           <div style={{ display: "none" }}>
