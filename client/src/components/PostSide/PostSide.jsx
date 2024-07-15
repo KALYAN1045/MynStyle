@@ -3,10 +3,10 @@ import Posts from "../Posts/Posts";
 import PostShare from "../PostShare/PostShare";
 import "./PostSide.css";
 
-const PostSide = () => {
+const PostSide = ({ onPostShare }) => {
   return (
     <div className="PostSide">
-      <PostShare />
+      <PostShare onPostShare={onPostShare} />
       <Posts />
     </div>
   );

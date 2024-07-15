@@ -31,6 +31,10 @@ const UserSchema = mongoose.Schema(
     country: String,
     followers: [],
     following: [],
+    coins: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

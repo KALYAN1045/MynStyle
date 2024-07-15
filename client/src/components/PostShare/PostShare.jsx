@@ -5,8 +5,10 @@ import { UilTimes } from "@iconscout/react-unicons";
 import { useDispatch, useSelector } from "react-redux";
 import { uploadImage, uploadPost } from "../../actions/UploadAction";
 import { getUnpostedOrders } from "../../api/OrderRequests";
+import { updateCoins } from "../../actions/CoinAction";
+import Cart from "../../img/cart.png";
 
-const PostShare = () => {
+const PostShare = ({ onPostShare }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authReducer.authData);
   const loading = useSelector((state) => state.postReducer.uploading);
@@ -17,13 +19,8 @@ const PostShare = () => {
   const desc = useRef();
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  // Fetch unposted orders on component mount
   useEffect(() => {
     fetchOrders();
-  }, []);
-
-  useEffect(() => {
-    // Reset selected order ID if the orders list changes
     if (orders.length > 0) {
       setSelectedOrderId(orders[0]._id);
     } else {
@@ -41,7 +38,6 @@ const PostShare = () => {
     }
   };
 
-  // handle Image Change
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
@@ -51,30 +47,25 @@ const PostShare = () => {
 
   const imageRef = useRef();
 
-  // handle post upload
   const handleUpload = async (e) => {
     e.preventDefault();
 
-    // Check if an order is selected
     if (!selectedOrderId) {
       console.error("No order selected.");
       return;
     }
 
-    // Check if there is text in the input or an image selected
     if (!descText && !image) {
       alert("Please enter a description or select an image to post.");
       return;
     }
 
-    // Post data
     const newPost = {
       userId: user._id,
       desc: desc.current.value,
-      orderId: selectedOrderId, // Include selected order ID
+      orderId: selectedOrderId,
     };
 
-    // if there is an image with post
     if (image) {
       const data = new FormData();
       const fileName = Date.now() + image.name;
@@ -83,24 +74,27 @@ const PostShare = () => {
       newPost.image = fileName;
 
       try {
-        dispatch(uploadImage(data));
+        await dispatch(uploadImage(data));
       } catch (err) {
         console.log(err);
       }
     }
-    console.log(newPost);
-    dispatch(uploadPost(newPost));
 
-    // Remove the selected order from the list of unposted orders
+    await dispatch(uploadPost(newPost));
+    await dispatch(updateCoins(user._id, 3));
+
     const updatedOrders = orders.filter(
       (order) => order._id !== selectedOrderId
     );
     setOrders(updatedOrders);
 
     resetShare();
+
+    if (onPostShare) {
+      onPostShare(); // Call the callback to trigger re-render
+    }
   };
 
-  // Reset Post Share
   const resetShare = () => {
     setImage(null);
     setDescText("");
@@ -112,20 +106,29 @@ const PostShare = () => {
     }
   };
 
-  // Handle change in dropdown selection
   const handleOrderChange = (event) => {
     const orderId = event.target.value;
-    console.log(orderId);
     setSelectedOrderId(orderId);
   };
 
-  // Handle description text change
   const handleDescChange = (event) => {
     setDescText(event.target.value);
   };
 
   if (orders.length === 0) {
-    return null; // or return an alternative message, e.g., <p>No unposted orders available.</p>
+    return (
+      <div className="PostShare">
+        <span className="no-orders">
+          <h4>
+            No orders to share yet!{" "}
+            <a href="https://www.myntra.com/">
+              <span>Start shopping</span>
+            </a>
+          </h4>
+          <img src={Cart} alt="No orders available" width="50px" />
+        </span>
+      </div>
+    );
   }
 
   return (

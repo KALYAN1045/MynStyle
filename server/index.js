@@ -11,7 +11,8 @@ import PostRoute from "./routes/PostRoute.js";
 import UploadRoute from "./routes/UploadRoute.js";
 import ChatRoute from "./routes/ChatRoute.js";
 import MessageRoute from "./routes/MessageRoute.js";
-import OrderRoute from "./routes/OrderRoute.js"; // New import
+import OrderRoute from "./routes/OrderRoute.js";
+import CoinRoute from "./routes/CoinRoute.js";
 
 const app = express();
 
@@ -38,4 +39,5 @@ app.use("/posts", PostRoute);
 app.use("/upload", UploadRoute);
 app.use("/chat", ChatRoute);
 app.use("/message", MessageRoute);
-app.use("/orders", OrderRoute); // New route declaration
+app.use("/orders", OrderRoute);
+app.use("/coins", CoinRoute);

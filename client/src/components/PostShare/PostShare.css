@@ -29,6 +29,30 @@
   outline: none;
 }
 
+.no-orders {
+  display: flex;
+  align-items: center;
+}
+
+.no-orders img {
+  margin-right: 8px; /* Adjust the spacing between the image and text */
+}
+
+.no-orders p {
+  margin: 0;
+}
+
+.no-orders a {
+  text-decoration: none; /* Remove underline */
+}
+
+.no-orders a span {
+  color: #f41cb2; /* Choose your desired color */
+}
+
+.no-orders a:visited span {
+  color: #f41cb2; /* Keep the color same after visit */
+}
 .dropdown {
   background-color: var(--inputColor);
   border-radius: 10px;

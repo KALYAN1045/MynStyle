@@ -1,0 +1,25 @@
+.wallet {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensures items are spaced apart */
+  background-color: var(--cardColor);
+  padding: 1rem;
+  border-radius: 1rem;
+  padding-left: 2rem;
+}
+
+.coin-section {
+  display: flex;
+  align-items: center;
+}
+
+.coin-img {
+  width: 40px;
+  margin-right: 10px; /* Adjust margin as needed */
+}
+
+.coin-count {
+  font-size: 1.2em; /* Example font size */
+  margin-right: 30px;
+  font-weight: bold; /* Example font weight */
+}
