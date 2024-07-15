@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Auth.css";
-import Logo from "../../img/logo.png";
+import Logo from "../../img/Myntra-Logo.png";
 import { logIn, signUp } from "../../actions/AuthActions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -52,12 +52,13 @@ const Auth = () => {
     <div className="Auth">
       {/* left side */}
 
-      <div className="a-left">
-        <img src={Logo} alt="" />
-
-        <div className="Webname">
-          <h1>ZKC Media</h1>
-          <h6>Explore the ideas throughout the world</h6>
+      <div className="Webname">
+        <img src={Logo} alt="Logo" className="logo" />
+        <div className="a-left">
+          <div className="Webname">
+            <h1>Studious Coders</h1>
+            <h6>A Fashion-Social Media</h6>
+          </div>
         </div>
       </div>
 
@@ -138,7 +139,6 @@ const Auth = () => {
               style={{
                 fontSize: "12px",
                 cursor: "pointer",
-                textDecoration: "underline",
               }}
               onClick={() => {
                 resetForm();
@@ -146,8 +146,8 @@ const Auth = () => {
               }}
             >
               {isSignUp
-                ? "Already have an account Login"
-                : "Don't have an account Sign up"}
+                ? "Already have an account? Login"
+                : "Don't have an account? Sign up"}
             </span>
             <button
               className="button infoButton"

@@ -13,11 +13,12 @@
   justify-content: center;
 }
 
-
-
 /* left side */
-.a-left{
-    gap: 2rem;
+.a-left {
+  gap: 2rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .a-left > img {
@@ -25,42 +26,53 @@
   height: 4rem;
 }
 
+.Webname {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 .Webname > h1 {
-    font-size: 3rem;
-    background-color: red;
-  
-    /* Create the gradient. */
-    background-image: var(--buttonBg);
-    
-    /* Set the background size and repeat properties. */
-    background-size: 100%;
-    background-repeat: repeat;
-  
-    /* Use the text as a mask for the background. */
-    /* This will show the gradient as a text color rather than element bg. */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; 
-    -moz-background-clip: text;
-    -moz-text-fill-color: transparent;
+  font-size: 3rem;
+  background-color: red;
+
+  /* Create the gradient. */
+  background-image: var(--buttonBg);
+
+  /* Set the background size and repeat properties. */
+  background-size: 100%;
+  background-repeat: repeat;
+
+  /* Use the text as a mask for the background. */
+  /* This will show the gradient as a text color rather than element bg. */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
 }
 
-.Webname>h6{
-    font-size: 0.85rem;
+.logo {
+  width: 300px; /* Adjust size as needed */
+  margin-right: 10px; /* Optional: Add margin between logo and text */
 }
 
-
+.Webname > h6 {
+  font-size: 14px; /* Adjust font size */
+  margin: 0; /* Remove default margin */
+  color: #666; /* Optional: Adjust color */
+  align-items: center;
+}
 
 /* right side */
 
-
-.authForm{
-    background-color: var(--cardColor);
-    border-radius: 1rem;
-    padding: 1rem;
+.authForm {
+  background-color: var(--cardColor);
+  border-radius: 1rem;
+  padding: 1rem;
 }
 
-.authForm>div{
-    width: 100%;
-    align-items: center;
-    justify-content: center;
+.authForm > div {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 }

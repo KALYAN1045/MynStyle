@@ -16,17 +16,9 @@ const PostShare = ({ onPostShare }) => {
   const [orders, setOrders] = useState([]);
   const [selectedOrderId, setSelectedOrderId] = useState("");
   const [descText, setDescText] = useState("");
+  const [trendName, setTrendName] = useState("");
   const desc = useRef();
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
-
-  useEffect(() => {
-    fetchOrders();
-    if (orders.length > 0) {
-      setSelectedOrderId(orders[0]._id);
-    } else {
-      setSelectedOrderId("");
-    }
-  }, [orders]);
 
   const fetchOrders = async () => {
     try {
@@ -56,7 +48,7 @@ const PostShare = ({ onPostShare }) => {
     }
 
     if (!image) {
-      alert("Please attach an snapshot of your order to share 🛍️");
+      alert("Please attach a snapshot of your order to share 🛍️");
       return;
     }
 
@@ -65,6 +57,21 @@ const PostShare = ({ onPostShare }) => {
       desc: desc.current.value,
       orderId: selectedOrderId,
     };
+
+    if (trendName) {
+      const hasHashtag = trendName.includes("#");
+      if (hasHashtag) {
+        const hashtagIndex = trendName.indexOf("#");
+        const spaceIndex = trendName.indexOf(" ", hashtagIndex);
+        const endIndex = spaceIndex !== -1 ? spaceIndex : trendName.length;
+        setTrendName(trendName.substring(hashtagIndex, endIndex));
+      } else {
+        alert(
+          "Please include a hashtag in your description to create a trend."
+        );
+        return;
+      }
+    }
 
     if (image) {
       const data = new FormData();
@@ -80,18 +87,45 @@ const PostShare = ({ onPostShare }) => {
       }
     }
 
-    await dispatch(uploadPost(newPost));
-    await dispatch(updateCoins(user._id, 3));
+    try {
+      await dispatch(uploadPost(newPost));
+      await dispatch(updateCoins(user._id, 3));
 
-    const updatedOrders = orders.filter(
-      (order) => order._id !== selectedOrderId
-    );
-    setOrders(updatedOrders);
+      const updatedOrders = orders.filter(
+        (order) => order._id !== selectedOrderId
+      );
+      setOrders(updatedOrders);
 
-    resetShare();
+      resetShare();
 
-    if (onPostShare) {
-      onPostShare(); // Call the callback to trigger re-render
+      if (onPostShare) {
+        onPostShare();
+      }
+
+      if (trendName) {
+        createOrUpdateTrend(trendName);
+      }
+
+      // Fetch updated list of orders after successful post
+      fetchOrders();
+    } catch (error) {
+      console.error("Error uploading post:", error);
+    }
+  };
+
+  const createOrUpdateTrend = async (name) => {
+    try {
+      const response = await fetch("/trend", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name }),
+      });
+      const data = await response.json();
+      console.log("Trend created:", data);
+    } catch (error) {
+      console.error("Error creating trend:", error);
     }
   };
 
@@ -105,6 +139,18 @@ const PostShare = ({ onPostShare }) => {
       setSelectedOrderId("");
     }
   };
+
+  useEffect(() => {
+    fetchOrders();
+  }, []); // Fetch orders once on component mount
+
+  useEffect(() => {
+    if (orders.length > 0) {
+      setSelectedOrderId(orders[0]._id);
+    } else {
+      setSelectedOrderId("");
+    }
+  }, [orders]); // Update selected order ID when orders change
 
   const handleOrderChange = (event) => {
     const orderId = event.target.value;
@@ -148,6 +194,12 @@ const PostShare = ({ onPostShare }) => {
           required
           ref={desc}
           onChange={handleDescChange}
+        />
+        <input
+          type="text"
+          placeholder="Add a trend (optional, use #)"
+          value={trendName}
+          onChange={(e) => setTrendName(e.target.value)}
         />
         <select
           className="dropdown"

@@ -47,11 +47,11 @@
 }
 
 .no-orders a span {
-  color: #f41cb2; /* Choose your desired color */
+  color: #ff3f6c; /* Choose your desired color */
 }
 
 .no-orders a:visited span {
-  color: #f41cb2; /* Keep the color same after visit */
+  color: #ff3f6c; /* Keep the color same after visit */
 }
 .dropdown {
   background-color: var(--inputColor);

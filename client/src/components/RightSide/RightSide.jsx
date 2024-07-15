@@ -21,7 +21,7 @@ const RightSide = ({ trigger }) => {
   return (
     <div className="RightSide">
       <MynCoin coins={coins} /> {/* Pass coins as prop */}
-      <TrendCard />
+      <TrendCard trigger={trigger} />
       <button className="button r-button" onClick={() => setModalOpened(true)}>
         Share
       </button>

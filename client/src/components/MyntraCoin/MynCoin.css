@@ -2,7 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between; /* Ensures items are spaced apart */
-  background-color: var(--cardColor);
+  background-color: #fff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow */
   padding: 1rem;
   border-radius: 1rem;
   padding-left: 2rem;
@@ -22,4 +23,8 @@
   font-size: 1.2em; /* Example font size */
   margin-right: 30px;
   font-weight: bold; /* Example font weight */
+}
+
+.coin {
+  color: #ff3f6c;
 }

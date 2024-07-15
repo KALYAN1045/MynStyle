@@ -19,18 +19,18 @@ function App() {
     >
       <div
         className="blur"
-        style={{ top: "-18%", right: "0", background: "#efbadf" }}
+        style={{ top: "-18%", right: "0", background: "#ff7f9d" }}
       ></div>
       <div
         className="blur"
-        style={{ top: "36%", left: "-8rem", background: "#efbadf" }}
+        style={{ top: "36%", left: "-8rem", background: "#ff7f9d" }}
       ></div>
       <div
         className="blur"
         style={{
           top: "70%",
           right: "0",
-          background: "#ffc38b",
+          background: "#ffaa5b",
         }}
       ></div>
       <Routes>

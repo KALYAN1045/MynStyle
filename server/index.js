@@ -13,6 +13,7 @@ import ChatRoute from "./routes/ChatRoute.js";
 import MessageRoute from "./routes/MessageRoute.js";
 import OrderRoute from "./routes/OrderRoute.js";
 import CoinRoute from "./routes/CoinRoute.js";
+import TrendRoute from "./routes/TrendRoute.js";
 
 const app = express();
 
@@ -41,3 +42,4 @@ app.use("/chat", ChatRoute);
 app.use("/message", MessageRoute);
 app.use("/orders", OrderRoute);
 app.use("/coins", CoinRoute);
+app.use("/trend", TrendRoute);

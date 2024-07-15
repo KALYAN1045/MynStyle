@@ -20,7 +20,9 @@ const MynCoin = () => {
     <div className="wallet">
       <div className="coin-section">
         <img src={coin} alt="Coin" className="coin-img" />
-        <h3>MynCoin</h3>
+        <h3>
+          Myn<span className="coin">Coin</span>
+        </h3>
       </div>
       <span className="coin-count">{coins}</span>
       {loading && <p>Loading...</p>}
