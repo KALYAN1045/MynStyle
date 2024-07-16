@@ -5,7 +5,7 @@ import { UilSearch } from "@iconscout/react-unicons";
 const LogoSearch = () => {
   return (
     <div className="LogoSearch">
-      <a href="http://localhost:3000/home">
+      <a href={`${import.meta.env.REACT_APP_URL}/home`}>
         <img src={Logo} alt="" className="Logo" />
       </a>
       <div className="Search">
