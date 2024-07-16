@@ -18,7 +18,7 @@ const RightSide = ({ postShareTrigger }) => {
       <button
         className="button r-button"
         onClick={() => {
-          window.location.href = `${import.meta.env.REACT_APP_URL}/orders`;
+          window.location.href = `${process.env.REACT_APP_URL}/orders`;
         }}
       >
         Create Order

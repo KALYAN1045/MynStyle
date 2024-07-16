@@ -111,7 +111,7 @@ const PostShare = ({ onPostShare }) => {
 
   const createOrUpdateTrend = async (name) => {
     try {
-      const response = await fetch(`${import.meta.env.REACT_APP_BASE_URL}`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -166,7 +166,7 @@ const PostShare = ({ onPostShare }) => {
         <span className="no-orders">
           <h4>
             No orders to share yet!{" "}
-            <a href={`${import.meta.env.REACT_APP_URL}/orders`}>
+            <a href={`${process.env.REACT_APP_URL}/orders`}>
               <span>Start shopping</span>
             </a>
           </h4>

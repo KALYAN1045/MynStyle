@@ -13,7 +13,7 @@ function App() {
       className="App"
       style={{
         height:
-          window.location.href === `${import.meta.env.REACT_APP_URL}/chat`
+          window.location.href === `${process.env.REACT_APP_URL}/chat`
             ? "calc(100vh - 2rem)"
             : "auto",
       }}

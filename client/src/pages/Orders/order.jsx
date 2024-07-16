@@ -24,10 +24,7 @@ const OrderForm = () => {
     };
 
     try {
-      await axios.post(
-        `${import.meta.env.REACT_APP_BASE_URL}/orders`,
-        newOrder
-      );
+      await axios.post(`${process.env.REACT_APP_BASE_URL}/orders`, newOrder);
       setSuccess("Order successfully created!");
 
       setTimeout(() => {
