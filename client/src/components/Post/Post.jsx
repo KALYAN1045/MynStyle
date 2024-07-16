@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Post.css";
 import Comment from "../../img/comment.png";
 import Share from "../../img/share.png";
-import Heart from "../../img/like.png";
+import Heart from "../../img/like1.png";
 import NotLike from "../../img/notlike.png";
 import { likePost } from "../../api/PostsRequests";
 import { useSelector } from "react-redux";
@@ -17,6 +17,7 @@ const Post = ({ data }) => {
     setLiked((prev) => !prev);
     liked ? setLikes((prev) => prev - 1) : setLikes((prev) => prev + 1);
   };
+
   return (
     <div className="Post">
       <img
@@ -32,7 +33,9 @@ const Post = ({ data }) => {
           onClick={handleLike}
         />
         <img src={Comment} alt="" />
-        <img src={Share} alt="" />
+        <a href={data.orderLink} target="_blank" rel="noopener noreferrer">
+          <img src={Share} alt="" />
+        </a>
       </div>
 
       <span style={{ color: "var(--gray)", fontSize: "12px" }}>

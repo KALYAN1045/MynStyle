@@ -1,3 +1,4 @@
+// Home.jsx
 import React, { useState } from "react";
 import PostSide from "../components/PostSide/PostSide";
 import ProfileSide from "../components/profileSide/ProfileSide";
@@ -5,17 +6,17 @@ import RightSide from "../components/RightSide/RightSide";
 import "./Home.css";
 
 const Home = () => {
-  const [trigger, setTrigger] = useState(false);
+  const [postShareTrigger, setPostShareTrigger] = useState(false);
 
   const handlePostShare = () => {
-    setTrigger(!trigger);
+    setPostShareTrigger((prev) => !prev);
   };
 
   return (
     <div className="Home">
       <ProfileSide />
       <PostSide onPostShare={handlePostShare} />
-      <RightSide trigger={trigger} />
+      <RightSide postShareTrigger={postShareTrigger} />
     </div>
   );
 };

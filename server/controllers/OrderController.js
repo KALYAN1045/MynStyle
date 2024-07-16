@@ -13,12 +13,13 @@ export const getUnpostedOrders = async (req, res) => {
 };
 
 export const createOrder = async (req, res) => {
-  const { userId, items } = req.body;
+  const { userId, items, orderLink } = req.body;
 
   try {
     const newOrder = new OrderModel({
       userId,
       items,
+      orderLink,
       posted: false,
     });
 

@@ -17,8 +17,7 @@ const FollowersModal = ({ modalOpened, setModalOpened }) => {
       opened={modalOpened}
       onClose={() => setModalOpened(false)}
     >
-
-    <FollowersCard location='modal'/>
+      <FollowersCard location="modal" />
     </Modal>
   );
 };

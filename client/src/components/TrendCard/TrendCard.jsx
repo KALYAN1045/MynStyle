@@ -8,14 +8,12 @@ const TrendCard = ({ trigger }) => {
     fetch("/trend/gettrends")
       .then((response) => response.json())
       .then((data) => {
-        // Sort trends by shares in descending order
         const sortedTrends = data.sort((a, b) => b.shares - a.shares);
-        // Limit trends to top 5
         const limitedTrends = sortedTrends.slice(0, 5);
         setTrends(limitedTrends);
       })
       .catch((error) => console.error("Error fetching trends:", error));
-  }, [trigger]); // Add trigger to dependency array
+  }, [trigger]);
 
   // Function to format numbers
   const formatNumber = (num) => {

@@ -1,20 +1,18 @@
+// components/MyntraCoin/MynCoin.jsx
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getCoins } from "../../actions/CoinAction"; // Adjust path as needed
+import { useSelector, useDispatch } from "react-redux";
+import { getCoins } from "../../actions/CoinAction";
 import "./MynCoin.css";
 import coin from "../../img/coin.png";
 
-const MynCoin = () => {
+const MynCoin = ({ postShareTrigger }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authReducer.authData);
-  const { coins, loading, error } = useSelector(
-    (state) => state.userCoinsReducer
-  ); // Assuming your Redux state structure
+  const { coins } = useSelector((state) => state.userCoinsReducer);
 
   useEffect(() => {
-    const userId = user._id;
-    dispatch(getCoins(userId));
-  }, [dispatch]);
+    dispatch(getCoins(user._id));
+  }, [dispatch, user._id, postShareTrigger]);
 
   return (
     <div className="wallet">
@@ -25,8 +23,6 @@ const MynCoin = () => {
         </h3>
       </div>
       <span className="coin-count">{coins}</span>
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
     </div>
   );
 };

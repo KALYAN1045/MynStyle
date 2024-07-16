@@ -36,6 +36,10 @@ const postSchema = mongoose.Schema(
       ref: "Orders",
       required: true,
     },
+    orderLink: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

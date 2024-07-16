@@ -52,25 +52,25 @@ const PostShare = ({ onPostShare }) => {
       return;
     }
 
+    const selectedOrder = orders.find((order) => order._id === selectedOrderId);
+    if (!selectedOrder) {
+      console.error("Selected order not found in fetched orders.");
+      return;
+    }
+
     const newPost = {
       userId: user._id,
       desc: desc.current.value,
       orderId: selectedOrderId,
+      orderLink: selectedOrder.orderLink, // Taking orderLink from selectedOrder
     };
 
     if (trendName) {
-      const hasHashtag = trendName.includes("#");
-      if (hasHashtag) {
-        const hashtagIndex = trendName.indexOf("#");
-        const spaceIndex = trendName.indexOf(" ", hashtagIndex);
-        const endIndex = spaceIndex !== -1 ? spaceIndex : trendName.length;
-        setTrendName(trendName.substring(hashtagIndex, endIndex));
-      } else {
-        alert(
-          "Please include a hashtag in your description to create a trend."
-        );
-        return;
-      }
+      const lowercaseTrendName = trendName.toLowerCase();
+      const hashtag = lowercaseTrendName.startsWith("#")
+        ? lowercaseTrendName
+        : `#${lowercaseTrendName}`;
+      createOrUpdateTrend(hashtag);
     }
 
     if (image) {
@@ -95,12 +95,8 @@ const PostShare = ({ onPostShare }) => {
         (order) => order._id !== selectedOrderId
       );
       setOrders(updatedOrders);
-
+      onPostShare();
       resetShare();
-
-      if (onPostShare) {
-        onPostShare();
-      }
 
       if (trendName) {
         createOrUpdateTrend(trendName);
@@ -115,13 +111,16 @@ const PostShare = ({ onPostShare }) => {
 
   const createOrUpdateTrend = async (name) => {
     try {
-      const response = await fetch("/trend", {
+      const response = await fetch("http://localhost:5000/trend", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ name }),
       });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
       console.log("Trend created:", data);
     } catch (error) {
@@ -167,7 +166,7 @@ const PostShare = ({ onPostShare }) => {
         <span className="no-orders">
           <h4>
             No orders to share yet!{" "}
-            <a href="https://www.myntra.com/">
+            <a href="http://localhost:3000/orders">
               <span>Start shopping</span>
             </a>
           </h4>

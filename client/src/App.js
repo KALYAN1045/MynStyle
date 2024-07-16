@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth/Auth";
 import Profile from "./pages/Profile/Profile";
+import OrderForm from "./pages/Orders/order";
 import { useSelector } from "react-redux";
 
 function App() {
@@ -49,6 +50,10 @@ function App() {
         <Route
           path="/profile/:id"
           element={user ? <Profile /> : <Navigate to="../auth" />}
+        />
+        <Route
+          path="/orders"
+          element={user ? <OrderForm /> : <Navigate to="../auth" />}
         />
         <Route
           path="*"

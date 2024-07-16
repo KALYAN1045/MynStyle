@@ -4,10 +4,9 @@ import OrderModel from "../models/orderModel.js";
 import mongoose from "mongoose";
 
 export const createPost = async (req, res) => {
-  const { orderId, userId, desc, image } = req.body;
-  console.log("hello");
+  const { orderId, userId, desc, image, orderLink } = req.body;
   try {
-    const newPost = new PostModel({ userId, desc, image, orderId });
+    const newPost = new PostModel({ userId, desc, image, orderId, orderLink });
     await newPost.save();
     await OrderModel.findByIdAndUpdate(orderId, { posted: true });
     res.status(200).json(newPost);

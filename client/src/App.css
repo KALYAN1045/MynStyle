@@ -28,7 +28,7 @@ body {
 .App {
   overflow: hidden;
   color: var(--black);
-  background: #ffe2ff;
+  background: #ffd4de;
   padding: 1rem 1rem;
 }
 
@@ -40,7 +40,7 @@ body {
   filter: blur(72px);
 }
 
-.button {
+button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,7 +51,7 @@ body {
   transition: all 100ms ease-out;
 }
 
-.button:hover {
+button:hover {
   cursor: pointer;
   color: var(--orange);
   background: transparent;

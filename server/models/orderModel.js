@@ -10,6 +10,7 @@ const orderSchema = new Schema(
       required: true,
     },
     items: { type: Array, required: true },
+    orderLink: { type: String, required: true },
     posted: { type: Boolean, default: false },
   },
   {
